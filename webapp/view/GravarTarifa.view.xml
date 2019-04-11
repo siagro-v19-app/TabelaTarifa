@@ -1,0 +1,85 @@
+<mvc:View xmlns:core="sap.ui.core"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	controllerName="br.com.idxtecTabelaTarifa.controller.GravarTarifa"
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	height="100%"
+	width="100%"
+	xmlns:f="sap.ui.layout.form">
+	<App>
+		<pages>
+			<Page showHeader="false">
+				<content>
+					<VBox class="sapUiSmallMargin">
+						<Panel headerText="Tabela Tarifa">
+							<f:SimpleForm id="formTarifa"
+								editable="true"
+								layout="ResponsiveGridLayout"
+								labelSpanXL="4"
+								labelSpanL="4"
+								labelSpanM="4"
+								labelSpanS="12"
+								adjustLabelSpan="false"
+								emptySpanXL="0"
+								emptySpanL="0"
+								emptySpanM="0"
+								emptySpanS="0"
+								columnsXL="3"
+								columnsL="2"
+								columnsM="2"
+								singleContainerFullSize="false">
+								<f:content>
+									<core:Title text="{view>/titulo}"/>
+									<Label text="Descrição" labelFor="descricao"/>
+									<Input id="descricao" value="{model>/Descricao}" required="true"/>
+									
+									<Label text="Taxa de Armazenagem" labelFor="taxaarmazenagem"/>
+									<Input id="taxaarmazenagem" value="{path: 'model>/TaxaArmazenagem', 
+											type: 'sap.ui.model.odata.type.Single',
+				                            formatOptions:{
+				                                decimals: 2,
+				                                decimalSeparator: ','
+				                            }}" required="true"/>
+				                            
+				                    <Label text="Vencimento de Armazenagem" labelFor="vencimentoarmazenagem"/>
+									<Input id="vencimentoarmazenagem" value="{path: 'model>/VencimentoArmazenagem', 
+											type: 'sap.ui.model.odata.type.Int32'}" required="true"/>
+				                    
+				                    <Label text="Taxa de Expurgo" labelFor="taxaexpurgo"/>
+									<Input id="taxaexpurgo" value="{path: 'model>/TaxaExpurgo', 
+											type: 'sap.ui.model.odata.type.Single',
+				                            formatOptions:{
+				                                decimals: 2,
+				                                decimalSeparator: ','
+				                            }}" required="true"/>
+				                    
+				                    <Label text="Vencimento de Expurgo" labelFor="vencimentoexpurgo"/>
+									<Input id="vencimentoexpurgo" value="{path: 'model>/VencimentoExpurgo', 
+											type: 'sap.ui.model.odata.type.Int32'}" required="true"/>        
+									
+									<Label text="Carência" labelFor="carencia"/>
+									<Input id="carencia" value="{path: 'model>/Carencia', 
+											type: 'sap.ui.model.odata.type.Int32'}" required="true"/>
+									
+									<Label text="Vigente até" labelFor="vigenteate" required="true"/>
+									<DatePicker id="vigenteate" dateValue="{model>/VigenteAte}"
+										displayFormat="dd.MM.yyyy" placeholder="dd.mm.aaaa"/>
+										
+									<Label text="Inativa" labelFor="inativa"/>
+									<CheckBox id="inativa" selected="{model>/Inativa}"/>
+								</f:content>
+							</f:SimpleForm>
+						</Panel>
+					</VBox>
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button icon="sap-icon://save" id="salvar" text="Salvar" press="onSalvar"/>
+						<Button icon="sap-icon://reset" id="voltar" text="Cancelar" press="onVoltar"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
