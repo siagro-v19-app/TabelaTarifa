@@ -95,23 +95,29 @@
 			"routes": [
 				{
 					"pattern": "",
-					"name": "tabelatarifa",
-					"target": "tabelatarifa"
+					"name": "tarifaLista",
+					"target": "tarifaLista"
 				},
 				{
-					"pattern": "gravartarifa",
-					"name": "gravartarifa",
-					"target": "gravartarifa"
+					"pattern": "tarifaAdd",
+					"name": "tarifaAdd",
+					"target": "tarifaAdd"
+				},
+				{
+					"pattern": "tarifaEdit/{tarifa}",
+					"name": "tarifaEdit",
+					"target": "tarifaEdit"
 				}
 			],
 			"targets": {
-				"tabelatarifa": {
-					"viewID": "tabelatarifa",
+				"tarifaLista": {
 					"viewName": "TabelaTarifa"
 				},
-				"gravartarifa": {
-					"viewID": "gravartarifa",
+				"tarifaAdd": {
 					"viewName": "GravarTarifa"
+				},
+				"tarifaEdit": {
+					"viewName": "EditarTarifa"
 				}
 			}
 		},

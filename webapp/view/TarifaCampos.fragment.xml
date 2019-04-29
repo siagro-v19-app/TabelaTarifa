@@ -1,0 +1,208 @@
+<core:FragmentDefinition
+	xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	xmlns:t="sap.ui.table"
+	xmlns:f="sap.ui.layout.form">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="formTarifa"
+			title="{view>/titulo}"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			labelSpanXL="4"
+			labelSpanL="4"
+			labelSpanM="4"
+			labelSpanS="12"
+			adjustLabelSpan="false"
+			emptySpanXL="0"
+			emptySpanL="0"
+			emptySpanM="0"
+			emptySpanS="0"
+			columnsXL="3"
+			columnsL="2"
+			columnsM="2"
+			singleContainerFullSize="false">
+			<f:content>
+				<core:Title/>
+				<Label text="Descrição" labelFor="descricao"/>
+				<Input id="descricao" value="{tarifa>/Descricao}" change="formChanges" required="true"/>
+				
+				<Label text="Taxa de Armazenagem" labelFor="taxaarmazenagem"/>
+				<Input id="taxaarmazenagem" value="{path: 'tarifa>/TaxaArmazenagem', 
+						type: 'sap.ui.model.odata.type.Single',
+	                    formatOptions:{
+	                        decimals: 2,
+	                        decimalSeparator: ','
+	                    }}" change="formChanges" required="true"/>
+	                    
+	            <Label text="Venc. de Armazenagem" labelFor="vencimentoarmazenagem"/>
+				<Input id="vencimentoarmazenagem" value="{path: 'tarifa>/VencimentoArmazenagem', 
+						type: 'sap.ui.model.odata.type.Int32'}" change="formChanges" required="true"/>
+	            
+	            <Label text="Taxa de Expurgo" labelFor="taxaexpurgo"/>
+				<Input id="taxaexpurgo" value="{path: 'tarifa>/TaxaExpurgo', 
+						type: 'sap.ui.model.odata.type.Single',
+	                    formatOptions:{
+	                        decimals: 2,
+	                        decimalSeparator: ','
+	                    }}" change="formChanges" required="true"/>
+	            
+	            <core:Title/>
+	            <Label text="Vencimento de Expurgo" labelFor="vencimentoexpurgo"/>
+				<Input id="vencimentoexpurgo" value="{path: 'tarifa>/VencimentoExpurgo', 
+						type: 'sap.ui.model.odata.type.Int32'}" change="formChanges" required="true"/>        
+				
+				<Label text="Carência" labelFor="carencia"/>
+				<Input id="carencia" value="{path: 'tarifa>/Carencia', 
+						type: 'sap.ui.model.odata.type.Int32'}" change="formChanges" required="true"/>
+				
+				<Label text="Vigente até" labelFor="vigenteate" required="true"/>
+				<DatePicker id="vigenteate" dateValue="{tarifa>/VigenteAte}"
+					displayFormat="dd.MM.yyyy" placeholder="dd.mm.aaaa" change="formChanges"/>
+					
+				<Label text="Inativa" labelFor="inativa"/>
+				<CheckBox id="inativa" selected="{tarifa>/Inativa}" select="formChanges"/>
+			</f:content>
+		</f:SimpleForm>
+		<TabContainer id="tabTarifa">
+			<items>
+				<TabContainerItem name="Secagem - Custo">
+					<content>
+						<t:Table id="tableSecagemCusto"
+							rows="{custo>/}"
+							class="sapUiSizeCondensed"
+							selectionMode="Single"
+							selectionBehavior="Row"
+							enableSelectAll="false"
+							editable="true"
+							visibleRowCountMode="Auto"
+							enableBusyIndicator="true"
+							alternateRowColors="true"
+							enableCustomFilter="false">
+							<t:toolbar>
+								<Toolbar>
+									<Title text="Inserir Custo de Secagem"/>
+									<ToolbarSpacer/>
+									<Button id="inserircusto" icon="sap-icon://add" press="onInserirCusto"/>
+									<Button id="removercusto" icon="sap-icon://delete" press="onRemoverCusto"/>
+								</Toolbar>
+							</t:toolbar>
+							<t:columns>
+								<t:Column>
+									<Label text="Custo - Secagem" required="true"/>
+									<t:template>
+										<Input id="custo"
+											value="{
+												path: 'custo>CustoSecagem',
+												type: 'sap.ui.model.odata.type.Single',
+												formatOptions: {
+													decimals: 2,
+													decimalSeparator: ','
+												}
+											}" change="formChanges"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<Label text="Umidade de" required="true"/>
+									<t:template>
+										<Input id="umidadedecusto"
+											value="{
+												path: 'custo>UmidadeDe',
+												type: 'sap.ui.model.odata.type.Single',
+												formatOptions: {
+													decimals: 2,
+													decimalSeparator: ','
+												}
+											}" change="formChanges"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<Label text="Umidade até" required="true"/>
+									<t:template>
+										<Input id="umidadeatecusto"
+											value="{
+												path: 'custo>UmidadeAte',
+												type: 'sap.ui.model.odata.type.Single',
+												formatOptions: {
+													decimals: 2,
+													decimalSeparator: ','
+												}
+											}" change="formChanges"/>
+									</t:template>
+								</t:Column>
+							</t:columns>
+						</t:Table>
+					</content>
+				</TabContainerItem>
+				<TabContainerItem name="Secagem - Quebra">
+					<content>
+						<t:Table id="tableSecagemQuebra"
+							rows="{quebra>/}"
+							class="sapUiSizeCondensed"
+							selectionMode="Single"
+							selectionBehavior="Row"
+							enableSelectAll="false"
+							editable="true"
+							visibleRowCountMode="Auto"
+							enableBusyIndicator="true"
+							alternateRowColors="true"
+							enableCustomFilter="false">
+							<t:toolbar>
+								<Toolbar>
+									<Title text="Inserir Quebra de Secagem"/>
+									<ToolbarSpacer/>
+									<Button id="inserirquebra" icon="sap-icon://add" press="onInserirQuebra"/>
+									<Button id="removerquebra" icon="sap-icon://delete" press="onRemoverQuebra"/>
+								</Toolbar>
+							</t:toolbar>
+							<t:columns>
+								<t:Column>
+									<Label text="Quebra - Secagem" required="true"/>
+									<t:template>
+										<Input id="quebra"
+											value="{
+												path: 'quebra>QuebraSecagem',
+												type: 'sap.ui.model.odata.type.Single',
+												formatOptions: {
+													decimals: 2,
+													decimalSeparator: ','
+												}
+											}" change="formChanges"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<Label text="Umidade de" required="true"/>
+									<t:template>
+										<Input id="umidadedequebra"
+											value="{
+												path: 'quebra>UmidadeDe',
+												type: 'sap.ui.model.odata.type.Single',
+												formatOptions: {
+													decimals: 2,
+													decimalSeparator: ','
+												}
+											}" change="formChanges"/>
+									</t:template>
+								</t:Column>
+								<t:Column>
+									<Label text="Umidade até" required="true"/>
+									<t:template>
+										<Input id="umidadeatequebra"
+											value="{
+												path: 'quebra>UmidadeAte',
+												type: 'sap.ui.model.odata.type.Single',
+												formatOptions: {
+													decimals: 2,
+													decimalSeparator: ','
+												}
+											}" change="formChanges"/>
+									</t:template>
+								</t:Column>
+							</t:columns>
+						</t:Table>
+					</content>
+				</TabContainerItem>
+			</items>
+		</TabContainer>
+	</VBox>
+</core:FragmentDefinition>

@@ -14,7 +14,8 @@ sap.ui.define([
 		
 		createViewModel: function(){
 			var oModel = new JSONModel({
-				titulo: ""
+				titulo: "",
+				hasChanges: false 
 			});
 			return oModel;
 		}

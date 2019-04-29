@@ -38,12 +38,6 @@ xmlns:fb="sap.ui.comp.filterbar">
 						</fb:filterGroupItems>
 					</fb:FilterBar>
 					<t:Table id="tableTarifa"
-						rows="{
-							path: '/TabelaTarifas',
-							sorter: {
-								path: 'Descricao'
-							}
-						}"
 						selectionMode="Single"
 						selectionBehavior="Row"
 						class="sapUiSizeCondensed"
@@ -54,7 +48,7 @@ xmlns:fb="sap.ui.comp.filterbar">
 							<Toolbar>
 								<Title text="Lista de Tarifas"/>
 								<ToolbarSpacer/>
-								<SearchField placeholder="Pesquisar tarifa..." width="30%" search="filtraTarifa"/>
+								<SearchField placeholder="Pesquisar descrição..." width="30%" search="filtraTarifa"/>
 							</Toolbar>
 						</t:toolbar>
 						<t:columns>
@@ -70,8 +64,8 @@ xmlns:fb="sap.ui.comp.filterbar">
 									<Text text="{Descricao}"/>
 								</t:template>
 							</t:Column>
-							<t:Column filterProperty="TaxaArmazenagem" sortProperty="TaxaArmazenagem">
-								<Label text="Taxa de Armazenagem"/>
+							<t:Column filterProperty="TaxaArmazenagem" sortProperty="TaxaArmazenagem" >
+								<Label text="Taxa de Armazenagem" wrapping="true"/>
 								<t:template>
 								<Text text="{path: 'TaxaArmazenagem',
 										type: 'sap.ui.model.odata.type.Single',
@@ -83,7 +77,7 @@ xmlns:fb="sap.ui.comp.filterbar">
 								</t:template>
 							</t:Column>
 							<t:Column filterProperty="VencimentoArmazenagem" sortProperty="VencimentoArmazenagem">
-								<Label text="Vencimento de Armazenagem"/>
+								<Label text="Vencimento de Armazenagem" wrapping="true"/>
 								<t:template>
 									<Text text="{path: 'VencimentoArmazenagem',
 										type: 'sap.ui.model.odata.type.Int32'}"
@@ -103,7 +97,7 @@ xmlns:fb="sap.ui.comp.filterbar">
 								</t:template>
 							</t:Column>
 							<t:Column filterProperty="VencimentoExpurgo" sortProperty="VencimentoExpurgo">
-								<Label text="Vencimento de Expurgo"/>
+								<Label text="Vencimento de Expurgo" wrapping="true"/>
 								<t:template>
 									<Text text="{path: 'VencimentoExpurgo',
 										type: 'sap.ui.model.odata.type.Int32'}"

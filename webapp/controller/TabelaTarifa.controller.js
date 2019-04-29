@@ -1,28 +1,26 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller",
+	"br/com/idxtecTabelaTarifa/controller/BaseController",
 	"sap/m/MessageBox",
-	"sap/ui/model/json/JSONModel",
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"br/com/idxtecTabelaTarifa/services/Session"
-], function(Controller, MessageBox, JSONModel, Filter, FilterOperator, Session) {
+], function(BaseController, MessageBox, Filter, FilterOperator, Session) {
 	"use strict";
 
-	return Controller.extend("br.com.idxtecTabelaTarifa.controller.TabelaTarifa", {
+	return BaseController.extend("br.com.idxtecTabelaTarifa.controller.TabelaTarifa", {
 		onInit: function(){
-			var oParamModel = new JSONModel();
-			
-			this.getOwnerComponent().setModel(oParamModel, "parametros");
 			this.getView().addStyleClass(this.getOwnerComponent().getContentDensityClass());
+            
+			var oFilter = new Filter("Empresa", FilterOperator.EQ, Session.get("EMPRESA_ID"));
+			var oView = this.getView();
+			var oTable = oView.byId("tableTarifa");
 			
-			this.getModel().attachMetadataLoaded(function(){
-				var oFilter = new Filter("Empresa", FilterOperator.EQ, Session.get("EMPRESA_ID"));
-				var oView = this.getView();
-				var oTable = oView.byId("tableTarifa");
-				var oColumn = oView.byId("columnDescricao");
-				
-				oTable.sort(oColumn);
-				oView.byId("tableTarifa").getBinding("rows").filter(oFilter, "Application");
+			oTable.bindRows({ 
+				path: '/TabelaTarifas',
+				sorter: {
+					path: 'Descricao'
+				},
+				filters: oFilter
 			});
 		},
 		
@@ -57,37 +55,28 @@ sap.ui.define([
 		},
 
 		onRefresh: function(e){
-			var oModel = this.getOwnerComponent().getModel();
-			oModel.refresh(true);
+			this.getModel().refresh(true);
 			this.getView().byId("tableTarifa").clearSelection();
 		},
 		
-		onIncluir: function(){
-			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			var oTable = this.byId("tableTarifa"); 
-			
-			var oParModel = this.getOwnerComponent().getModel("parametros");
-			oParModel.setData({operacao: "incluir"});
-			
-			oRouter.navTo("gravartarifa");
-			oTable.clearSelection();
+		onIncluir: function(oEvent) {
+			this.getRouter().navTo("tarifaAdd");
 		},
 		
-		onEditar: function(){
-			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			var oTable = this.byId("tableTarifa");
+		onEditar: function(oEvent) {
+			var oTable = this.getView().byId("tableTarifa");
 			var nIndex = oTable.getSelectedIndex();
 			
-			if (nIndex === -1){
+			if (nIndex > -1) {
+				var oContext = oTable.getContextByIndex(nIndex);
+				this.getRouter().navTo( "tarifaEdit" , {
+					tarifa: oContext.getProperty( "Id" )
+				});
+				
+			} else {
 				MessageBox.warning("Selecione uma tarifa na tabela.");
-				return;
 			}
 			
-			var sPath = oTable.getContextByIndex(nIndex).sPath;
-			var oParModel = this.getOwnerComponent().getModel("parametros");
-			oParModel.setData({sPath: sPath, operacao: "editar"});
-			
-			oRouter.navTo("gravartarifa");
 			oTable.clearSelection();
 		},
 		
@@ -97,7 +86,7 @@ sap.ui.define([
 			var nIndex = oTable.getSelectedIndex();
 			
 			if (nIndex === -1){
-				MessageBox.warning("Selecione uma tarifa na tabela.");
+				MessageBox.warning("Selecione uma tarifa da tabela.");
 				return;
 			}
 			
