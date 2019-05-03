@@ -399,9 +399,8 @@ sap.ui.define([
 						MessageBox.warning("Os dados de quebra não podem ter valor igual a 0 (zero).");
 						return true;
 					}
-				}	
+				}
 			}
 		},
 	});
-
 });
